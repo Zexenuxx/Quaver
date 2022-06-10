@@ -115,7 +115,10 @@ namespace Quaver.Shared.Database.Judgements
             windows.Great /= (float) Math.Pow(constant, n);
             windows.Good /= (float) Math.Pow(constant, n);
             windows.Okay /= (float) Math.Pow(constant, n);
-            windows.Miss /= (float) Math.Pow(constant, n);
+            // Don't scale miss on harder judgements, easier judgement users would suffer much higher penalty for early hit
+            // than harder judgement users.
+            if (n < 0)
+                windows.Miss /= (float) Math.Pow(constant, n);
 
             windows.Marvelous = (int) windows.Marvelous;
             windows.Perfect = (int) windows.Perfect;
